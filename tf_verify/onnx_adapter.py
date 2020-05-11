@@ -2,15 +2,23 @@ import sys, os
 from typing import Optional
 import numpy as np
 
-sys.path.insert(0, '../ELINA/python_interface/')
-sys.path.insert(0, '../deepg/code/')
+sys.path.insert(0, 'eran/ELINA/python_interface/')
+sys.path.insert(0, 'eran/deepg/code/')
 
 from .eran import ERAN
 from .read_net_file import *
 from .ai_milp import *
 from .config import config
 from .constraint_utils import *
-from .__main__ import init_domain
+
+
+def init_domain(d):
+     if d == 'refinezono':
+         return 'deepzono'
+     elif d == 'refinepoly':
+         return 'deeppoly'
+     else:
+         return d
 
 
 class ONNXAnalyzer:
@@ -23,7 +31,7 @@ class ONNXAnalyzer:
                  default_epsilon: float = 0.01,
                  complete: bool = config.complete
                  ):
-        assert os.path.splitext(netname)[-1] == "onnx", "unrecognized netname extension"
+        assert os.path.splitext(netname)[-1] == ".onnx", "unrecognized netname extension"
         model, is_conv = read_onnx_net(netname)
         self.eran = ERAN(model, is_onnx=True)
         self.domain = domain

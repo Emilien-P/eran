@@ -7,13 +7,13 @@ import tensorflow as tf
 import csv
 import time
 from tqdm import tqdm
-from ai_milp import *
 import argparse
 import re
 import itertools
 from multiprocessing import Pool
 import onnxruntime.backend as rt
 
+from .ai_milp import *
 from .eran import ERAN
 from .read_net_file import *
 from .read_zonotope_file import read_zonotope
