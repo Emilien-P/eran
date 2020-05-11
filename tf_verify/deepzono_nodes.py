@@ -10,9 +10,9 @@ from elina_abstract0 import *
 from elina_manager import *
 from elina_dimension import *
 from functools import reduce
-from ai_milp import *
-from krelu import encode_krelu_cons
-from config import config
+from .ai_milp import *
+from .krelu import encode_krelu_cons
+from .config import config
 
 
 

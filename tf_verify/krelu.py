@@ -11,7 +11,7 @@ import itertools
 import multiprocessing
 import math
 
-from config import config
+from .config import config
 
 """
 From reference manual:

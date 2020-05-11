@@ -1,6 +1,6 @@
 from gurobipy import *
 import numpy as np
-from config import config
+from .config import config
 import multiprocessing
 
 import sys
