@@ -3,21 +3,22 @@ sys.path.insert(0, '../ELINA/python_interface/')
 sys.path.insert(0, '../deepg/code/')
 import numpy as np
 import os
-from eran import ERAN
-from read_net_file import *
-from read_zonotope_file import read_zonotope
 import tensorflow as tf
 import csv
 import time
 from tqdm import tqdm
 from ai_milp import *
 import argparse
-from config import config
-from constraint_utils import *
 import re
 import itertools
 from multiprocessing import Pool
 import onnxruntime.backend as rt
+
+from .eran import ERAN
+from .read_net_file import *
+from .read_zonotope_file import read_zonotope
+from .config import config
+from .constraint_utils import *
 
 #ZONOTOPE_EXTENSION = '.zt'
 EPS = 10**(-9)
