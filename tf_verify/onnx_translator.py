@@ -75,7 +75,7 @@ def prepare_model(model):
 	input_node_map = {}
 
 	for initial in model.graph.initializer:
-		const = nchw_to_nhwc(numpy_helper.to_array(initial))
+		const = nchw_to_nhwc(numpy_helper.to_array(initial)).copy()
 		constants_map[initial.name] = const
 		shape_map[initial.name] = const.shape
 
@@ -93,7 +93,7 @@ def prepare_model(model):
 			input_node_map[input] = node
 		if node.op_type == "Constant":
 			const = node.attribute
-			const = nchw_to_nhwc(numpy_helper.to_array(const[0].t))
+			const = nchw_to_nhwc(numpy_helper.to_array(const[0].t)).copy()
 			constants_map[node.output[0]] = const
 			shape_map[node.output[0]] = const.shape
 
