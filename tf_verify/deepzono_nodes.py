@@ -4,11 +4,11 @@
 
 
 import numpy as np
-from zonoml import *
 from elina_interval import *
 from elina_abstract0 import *
 from elina_manager import *
 from elina_dimension import *
+from zonoml import *
 from functools import reduce
 from .ai_milp import *
 from .krelu import encode_krelu_cons
