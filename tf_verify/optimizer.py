@@ -486,7 +486,7 @@ class Optimizer:
             # ONNX operation
             elif self.operations[i] == "Conv":
                 filters, bias, image_shape, strides, pad_top, pad_left, input_names,output_name,out_shape = self.resources[i][domain]
-                has_relu = self.operations[i+1] == "Relu"
+                has_relu = (len(self.operations) > i+1) and (self.operations[i+1] == "Relu")
                 if has_relu:
                     nn.layertypes.append('Conv2D')
                     _,output_name,output_shape = self.resources[i+1][domain]
