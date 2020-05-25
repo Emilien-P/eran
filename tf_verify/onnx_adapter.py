@@ -42,7 +42,7 @@ class ONNXAnalyzer:
         self.complete = complete
 
     def verify(self, image: np.ndarray, label: int, epsilon: Optional[float] = None) -> Optional[bool]:
-        assert np.min(image) >= 0 and np.max(image) <= 1, "Image pixel values should be in [0, 1]"
+#        assert np.min(image.numpy()) >= 0 and np.max(image.numpy()) <= 1, "Image pixel values should be in [0, 1]"
         if epsilon is None:
             epsilon = self.default_epsilon
         specLB = np.copy(image)
@@ -62,19 +62,20 @@ class ONNXAnalyzer:
             print("nlb ", nlb[len(nlb) - 1], " nub ", nub[len(nub) - 1])
             if perturbed_label == label:
                 print("img verified", label)
-                return True
+                return True, nlb, nub
             else:
                 if self.complete:
                     constraints = get_constraints_for_dominant_label(label, 10)
                     verified_flag, adv_image = verify_network_with_milp(nn, specLB, specUB, nlb, nub, constraints)
                     if verified_flag:
-                        return True
+                        return True, nlb, nub
                     else:
                         cex_label, _, _, _ = self.eran.analyze_box(adv_image, adv_image, 'deepzono', config.timeout_lp,
                                                               config.timeout_milp, config.use_default_heuristic)
                         if cex_label != label:
                             print("adversarial image ", adv_image, "cex label", cex_label, "correct label ", label)
                 else:
-                    return False
+                    return False, nlb, nub
         else:
             print("img not considered, correct_label", label, "classified label ", pred_label)
+            return None, None, None 

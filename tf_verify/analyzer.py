@@ -164,6 +164,8 @@ class Analyzer:
             output_size = self.ir_list[-1].output_length
         else:
             output_size = reduce(lambda x,y: x*y, self.ir_list[-1].bias.shape, 1)
+
+        print(f"output_size = {output_size}")
     
         dominant_class = -1
         if(self.domain=='refinepoly'):

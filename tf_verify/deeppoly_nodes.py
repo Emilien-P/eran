@@ -27,7 +27,7 @@ def calc_bounds(man, element, nn, nlb, nub, relu_groups, is_refine_layer = False
     itv = [bounds[i] for i in range(num_neurons)]
     lbi = [x.contents.inf.contents.val.dbl for x in itv]
     ubi = [x.contents.sup.contents.val.dbl for x in itv]
-    if is_refine_layer:
+    if True or is_refine_layer:
         nlb.append(lbi)
         nub.append(ubi)
     if use_krelu:
