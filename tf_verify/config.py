@@ -47,4 +47,4 @@ class config:
     output_constraints = None # output constraints file to check
 
     # GPU options
-    device = Device.CPU # Which device Deeppoly should run on
+    device = Device.CUDA # Which device Deeppoly should run on

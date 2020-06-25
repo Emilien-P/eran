@@ -4,7 +4,6 @@ cpu_affinity = os.sched_getaffinity(0)
 sys.path.insert(0, '../ELINA/python_interface/')
 sys.path.insert(0, '../deepg/code/')
 import numpy as np
-import os
 from eran import ERAN
 from read_net_file import *
 from read_zonotope_file import read_zonotope

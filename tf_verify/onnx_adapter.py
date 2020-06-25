@@ -56,6 +56,9 @@ class ONNXAnalyzer:
             raise ValueError(f"Unsupported network format {ext}")
         
         self.eran = ERAN(model, is_onnx=(ext == ".onnx"))
+        assert os.path.splitext(netname)[-1] == ".onnx", "unrecognized netname extension"
+        model, is_conv = read_onnx_net(netname)
+        self.eran = ERAN(model, is_onnx=True)
         self.domain = domain
         self.timeout_lp = timeout_lp
         self.timeout_milp = timeout_milp
@@ -83,7 +86,6 @@ class ONNXAnalyzer:
                                                          self.timeout_lp,
                                                          self.timeout_milp,
                                                          self.use_default_heuristic)
-
         print(f"verified {nlb[-1]} {nub[-1]}")
         print(f"True label is {label}")
         print(f"ERAN analyze box predicted label {pred_label}")
@@ -100,6 +102,9 @@ class ONNXAnalyzer:
             specLB = specLB.transpose(1, 2, 0)
             specUB = specUB.transpose(1, 2, 0)
 
+        if label == pred_label:
+            specLB = np.clip(image - epsilon, 0, 1)
+            specUB = np.clip(image + epsilon, 0, 1)
             perturbed_label, _, nlb, nub = self.eran.analyze_box(specLB, specUB, self.domain, self.timeout_lp,
                                                                  self.timeout_milp, self.use_default_heuristic)
             print("nlb ", nlb[len(nlb) - 1], " nub ", nub[len(nub) - 1])
@@ -121,4 +126,4 @@ class ONNXAnalyzer:
                     return False, nlb, nub
         else:
             print("img not considered, correct_label", label, "classified label ", pred_label)
-            return None, None, None
+            return None, None, None 
